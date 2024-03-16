@@ -18,7 +18,11 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        
+        /// title of the screen
+        title = "Storm Viewer"
+        /// change the large titles by false
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         /// declares a constant called fm and assigns in the value returned by FileManager.default
         /// This is a data type that lets us work with the filesystem
@@ -36,11 +40,20 @@ class ViewController: UIViewController{
             }
         }
         
-        /// Initialize UITableView
+        // Initialize UITableView
+        /// this creates a new instance of UITableView with a frame corresponding to the size of the view.
         tableView = UITableView(frame: view.bounds, style: .plain)
+        /// It defines the current controller as the table's data source. 
+        /// This means that the controller will provide the data to be displayed in the table.
         tableView.dataSource = self
+        /// It defines the current controller as the table's delegate.
+        /// The delegate is responsible for handling table-specific events and behaviors, such as cell selection.
         tableView.delegate = self
+        /// It registers a cell type (UITableViewCell) for reuse with a specific identifier (reuseID).
+        /// This is useful so that the table can create and reuse cells efficiently when scrolling.
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseID)
+        
+        /// adds the previously created UITableView to a superior view, probably the main view of your view controller.
         view.addSubview(tableView)
     }
 }
@@ -48,12 +61,14 @@ class ViewController: UIViewController{
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
-    
+    /// returns the number of rows (or elements) in the specified section of the table.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         /// return how many pictures we have in the pictures Array
         return pictures.count
     }
     
+    
+    /// provides a cell for a specified location (or row) in the table.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         /// we are retrieving a reusable cell from the UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath)
@@ -72,12 +87,15 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    // MARK: - UITableViewDelegate
     
+    /// is called when the user selects a cell in the table.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Implement what happens when a row is selected, if needed
-        // For example, you can display the selected image
-        // let selectedPicture = pictures[indexPath.row]
-        // Now, do something with selectedPicture
+        /// This line creates a new instance of your DetailVC class,
+        /// which is your detailed view controller for displaying full-screen images.
+        let fullImageVC = DetailVC()
+        /// This property is used to load and display the appropriate image in your detailed view controller.
+        fullImageVC.selectedImageName = pictures[indexPath.row]
+        /// DetailVC becomes the active view controller, and is displayed on screen.
+        navigationController?.pushViewController(fullImageVC, animated: true)
     }
 }
