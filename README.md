@@ -14,7 +14,7 @@ Storm Viewer is the first project from the "100 Days of Swift" program by Paul H
 The Storm Viewer project contains the following components:
 - `ViewController.swift`: The primary view controller responsible for displaying a list of storm images.
 - `FullImageViewController.swift`: A secondary view controller for displaying individual storm images in full screen.
-- `Main.storyboard`: Interface Builder file for designing the app's user interface.
+- `No Main.storyboard`: All designing of the app's is made programmatically.
 - Image assets: Contains a set of storm images used in the app.
 
 ## Getting Started
